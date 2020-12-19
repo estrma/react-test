@@ -1,6 +1,6 @@
 import React, {ReactElement} from "react";
 
-import {convert} from "../../services/temperature";
+import {convertCelsius} from "../../services/temperature";
 
 interface WeatherPanelProps extends WeatherDatapoint {
     unit: TempUnit;
@@ -8,7 +8,7 @@ interface WeatherPanelProps extends WeatherDatapoint {
 
 const ROOT_IMG_URL = 'https://www.metaweather.com/static/img/weather/png/64/';
 
-const format = (temp: number, unit: TempUnit): string => `${Math.round(convert(temp, unit))}°${unit}`;
+const format = (temp: number, unit: TempUnit): string => `${Math.round(convertCelsius(temp, unit))}°${unit}`;
 
 const WeatherPanel = ({
                           weather_state_name,
