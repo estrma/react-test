@@ -1,6 +1,12 @@
 import {useEffect, useState} from 'react'
 
-const useGeolocation = (): { latitude: number, longitude: number } => {
+interface GeolocationProps {
+    latitude: number;
+    longitude: number;
+    error?: GeolocationPositionError
+}
+
+const useGeolocation = (): GeolocationProps => {
 
     const [coordinates, setCoordinates] = useState({
         latitude: null,

@@ -5,6 +5,7 @@ import WeatherPanels from "../components/WeatherPanels";
 import LocationInput from "../components/LocationInput";
 import LocationSuggestions from "../components/LocationSuggestions";
 import UnitToggler from "../components/UnitToggler";
+import Error from "../components/Error";
 import LocationTitle from "../components/LocationTitle";
 import {getLocationByLatLng, getWeather, getLocation} from "../services/api";
 
@@ -23,6 +24,8 @@ const WeatherApp = (): ReactElement => {
     const [isWeatherLoading, setWeatherLoading] = useState<boolean>(false);
     const [isLocationSuggestionsLoading, setLocationSuggestionsLoading] = useState<boolean>(false);
 
+    const [hasError, setHasError] = useState<boolean>(false);
+
     const setLocationData = (response: WeatherLocation[]): void => response && setLocation(response[0]);
     const setLocationSuggestionsData = (response: WeatherLocation[]): void => setLocationSuggestions(response);
     const setWeatherData = (response: WeatherDatapoint[]): void => setWeather(response);
@@ -33,11 +36,16 @@ const WeatherApp = (): ReactElement => {
     const onUnitSelect = (unitSelected: TempUnit): void => setUnit(unitSelected);
 
     useEffect(() => {
-        const {latitude, longitude} = geolocation;
+        const {latitude, longitude, error} = geolocation;
+        if (error) {
+            setHasError(true);
+        }
         if (latitude === null || longitude === null) {
             setLocation(null);
         } else {
-            getLocationByLatLng(latitude, longitude).then(setLocationData);
+            getLocationByLatLng(latitude, longitude)
+                .then(setLocationData)
+                .catch(() => setHasError(true));
         }
     }, [geolocation]);
 
@@ -45,14 +53,18 @@ const WeatherApp = (): ReactElement => {
         if (!location) return;
         const {woeid} = location;
         setWeatherLoading(true);
-        getWeather(woeid).then(setWeatherData);
+        getWeather(woeid)
+            .then(setWeatherData)
+            .catch(() => setHasError(true));
         localStorage.setItem(LS_LOCATION_KEY, `${woeid}`);
     }, [location]);
 
     useEffect(() => {
         if (locationString.length > CHAR_LIMIT) {
             setLocationSuggestionsLoading(true);
-            getLocation(locationString).then(setLocationSuggestionsData);
+            getLocation(locationString)
+                .then(setLocationSuggestionsData)
+                .catch(() => setHasError(true));
         } else {
             setLocationSuggestions(undefined);
         }
@@ -72,6 +84,7 @@ const WeatherApp = (): ReactElement => {
 
     return (
         <>
+            {hasError && <Error />}
             <UnitToggler units={['C', 'F']} unitSelected={unit} onSelect={onUnitSelect} />
             <LocationTitle location={location} />
             <WeatherPanels unit={unit} weather={weather} isLoading={isWeatherLoading} />

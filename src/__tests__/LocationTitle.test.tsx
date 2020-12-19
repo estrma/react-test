@@ -7,6 +7,7 @@ describe('LocationTitle', () => {
         render(<LocationTitle location={null} />);
         expect(screen.getByText('location not set')).toBeInTheDocument();
     });
+
     it('renders the correct text if location set', () => {
         render(<LocationTitle location={{
             latt_long: "52.235352,21.009390",

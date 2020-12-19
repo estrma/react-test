@@ -15,6 +15,7 @@ body {
 .error {
   border: 2px red solid;
   color: red;
+  display: inline-block;
   margin: $margin;
   padding: 14px;
 }
@@ -59,8 +60,8 @@ body {
 }
 
 .weather-panels {
-  margin: 0 $margin;
   height: 140px;
+  margin: 0 $margin;
 
   ul {
     display: flex;

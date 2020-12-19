@@ -9,9 +9,6 @@ const fetchJSON = <T>(path: string): Promise<T> => {
                 throw new Error(response.statusText);
             }
             return response.json();
-        })
-        .catch((response) => {
-            console.log(response);
         });
 };
 
