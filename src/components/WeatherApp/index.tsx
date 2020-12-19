@@ -1,6 +1,6 @@
 import React, {useState, useEffect, ReactElement} from "react";
 
-import useGeolocation from "../../services/geolocation";
+import useGeolocation from "../../hooks/geolocation";
 import WeatherPanels from "../../components/WeatherPanels";
 import LocationInput from "../../components/LocationInput";
 import LocationSuggestions from "../../components/LocationSuggestions";
