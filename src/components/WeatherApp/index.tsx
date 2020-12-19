@@ -9,7 +9,6 @@ import LocationTitle from "../../components/LocationTitle";
 import {getLocationByLatLng, getWeather, getLocation} from "../../services/api";
 
 const LS_LOCATION_KEY = 'weather_app_location_id';
-const DAYS_LIMIT = 3;
 const CHAR_LIMIT = 2;
 
 const WeatherApp = (): ReactElement => {
@@ -25,7 +24,7 @@ const WeatherApp = (): ReactElement => {
 
     const setLocationData = (response: WeatherLocation[]): void => response && setLocation(response[0]);
     const setLocationSuggestionsData = (response: WeatherLocation[]): void => setLocationSuggestions(response);
-    const setWeatherData = (response: Weather): void => setWeather(response.consolidated_weather.slice(0, DAYS_LIMIT));
+    const setWeatherData = (response: WeatherDatapoint[]): void => setWeather(response);
 
     const onLocationStringChange = ({target}) => setLocationString(target.value);
 
