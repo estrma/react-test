@@ -1,7 +1,7 @@
 
 const API_URL = "https://meta-weather.now.sh/api/";
 
-export const fetchJSON = <T>(path: string): Promise<T> => {
+const fetchJSON = <T>(path: string): Promise<T> => {
     return fetch(`${API_URL}${path}`,)
         .then((response) => {
             if (!response.ok) {
