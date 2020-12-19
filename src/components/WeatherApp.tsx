@@ -1,12 +1,12 @@
 import React, {useState, useEffect, ReactElement} from "react";
 
-import useGeolocation from "../../hooks/geolocation";
-import WeatherPanels from "../../components/WeatherPanels";
-import LocationInput from "../../components/LocationInput";
-import LocationSuggestions from "../../components/LocationSuggestions";
-import UnitToggler from "../../components/UnitToggler";
-import LocationTitle from "../../components/LocationTitle";
-import {getLocationByLatLng, getWeather, getLocation} from "../../services/api";
+import useGeolocation from "../hooks/geolocation";
+import WeatherPanels from "../components/WeatherPanels";
+import LocationInput from "../components/LocationInput";
+import LocationSuggestions from "../components/LocationSuggestions";
+import UnitToggler from "../components/UnitToggler";
+import LocationTitle from "../components/LocationTitle";
+import {getLocationByLatLng, getWeather, getLocation} from "../services/api";
 
 const LS_LOCATION_KEY = 'weather_app_location_id';
 const CHAR_LIMIT = 2;

@@ -1,5 +1,5 @@
 import React, {ReactElement} from "react";
-import Preloader from "../../components/Preloader";
+import Preloader from "../components/Preloader";
 
 interface LocationSuggestionsProps {
     locations: WeatherLocation[];

@@ -1,6 +1,6 @@
 import React, {ReactElement} from "react";
 
-import {convertCelsius} from "../../services/temperature";
+import {convertCelsius} from "../services/temperature";
 
 interface WeatherPanelProps extends WeatherDatapoint {
     unit: TempUnit;

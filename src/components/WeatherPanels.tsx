@@ -1,7 +1,7 @@
 import React, {ReactElement} from "react";
 
-import Preloader from "../../components/Preloader";
-import WeatherPanel from "../../components/WeatherPanel";
+import Preloader from "../components/Preloader";
+import WeatherPanel from "../components/WeatherPanel";
 
 interface WeatherPanelsProps {
     isLoading: boolean;
