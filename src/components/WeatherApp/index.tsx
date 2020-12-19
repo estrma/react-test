@@ -19,7 +19,9 @@ const WeatherApp = (): ReactElement => {
     const [location, setLocation] = useState<WeatherLocation | undefined | null>(undefined);
     const [weather, setWeather] = useState<WeatherDatapoint[] | undefined>(undefined);
     const [locationString, setLocationString] = useState<string>('');
-    const [locationSuggestions, setLocationSuggestions] = useState<WeatherLocation[]>([]);
+    const [locationSuggestions, setLocationSuggestions] = useState<WeatherLocation[] | undefined>(undefined);
+
+    const [isLocationSuggestionsLoading, setLocationSuggestionsLoading] = useState<boolean>(false);
 
     const setLocationData = (response: WeatherLocation[]): void => response && setLocation(response[0]);
     const setLocationSuggestionsData = (response: WeatherLocation[]): void => setLocationSuggestions(response);
@@ -48,9 +50,18 @@ const WeatherApp = (): ReactElement => {
 
     useEffect(() => {
         if (locationString.length > CHAR_LIMIT) {
+            setLocationSuggestionsLoading(true);
             getLocation(locationString).then(setLocationSuggestionsData);
+        } else {
+            setLocationSuggestions(undefined);
         }
     }, [locationString]);
+
+    useEffect(() => {
+        if (locationSuggestions) {
+            setLocationSuggestionsLoading(false);
+        }
+    }, [locationSuggestions]);
 
     return (
         <>
@@ -58,7 +69,8 @@ const WeatherApp = (): ReactElement => {
             <LocationTitle location={location} />
             <WeatherPanels unit={unit} weather={weather} />
             <LocationInput value={locationString} onChange={onLocationStringChange} />
-            <LocationSuggestions locations={locationSuggestions} onSelect={onLocationSelect} />
+            <LocationSuggestions isLoading={isLocationSuggestionsLoading} locations={locationSuggestions}
+                                 onSelect={onLocationSelect} />
         </>
     )
 
