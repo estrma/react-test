@@ -1,7 +1,13 @@
 import React, {ReactElement} from "react";
 import Preloader from "../../components/Preloader";
 
-const LocationSuggestions = ({locations, isLoading, onSelect}: { locations: WeatherLocation[], isLoading: boolean, onSelect: (e) => void }): ReactElement => (
+interface LocationSuggestionsProps {
+    locations: WeatherLocation[];
+    isLoading: boolean;
+    onSelect: (e) => void;
+}
+
+const LocationSuggestions = ({locations, isLoading, onSelect}: LocationSuggestionsProps): ReactElement => (
     <div className="location-suggestions">
         {isLoading ? (<Preloader />) : (
             <ul>

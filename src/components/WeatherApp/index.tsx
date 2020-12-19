@@ -27,7 +27,7 @@ const WeatherApp = (): ReactElement => {
     const setLocationSuggestionsData = (response: WeatherLocation[]): void => setLocationSuggestions(response);
     const setWeatherData = (response: WeatherDatapoint[]): void => setWeather(response);
 
-    const onLocationStringChange = ({target}) => setLocationString(target.value);
+    const onLocationStringChange = ({target}): void => setLocationString(target.value);
 
     const onLocationSelect = (locationSuggestion: WeatherLocation): void => setLocation(locationSuggestion);
     const onUnitSelect = (unitSelected: TempUnit): void => setUnit(unitSelected);

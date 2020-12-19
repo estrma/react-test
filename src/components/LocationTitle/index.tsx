@@ -1,7 +1,11 @@
 import React, {ReactElement} from "react";
 import Preloader from "../../components/Preloader";
 
-const LocationTitle = ({location}: { location: WeatherLocation }): ReactElement => (
+interface LocationTitleProps {
+    location: WeatherLocation;
+}
+
+const LocationTitle = ({location}: LocationTitleProps): ReactElement => (
     <h2 className="location-title">
         {location === null && 'location not set'}
         {location === undefined && (<Preloader />)}

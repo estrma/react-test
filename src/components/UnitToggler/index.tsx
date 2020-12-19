@@ -3,7 +3,7 @@ import React, {ReactElement} from "react";
 interface UnitTogglerProps {
     units: TempUnit[];
     unitSelected: TempUnit;
-    onSelect: (e) => void
+    onSelect: (unit: TempUnit) => void
 }
 
 const UnitToggler = ({units, unitSelected, onSelect}: UnitTogglerProps): ReactElement => (

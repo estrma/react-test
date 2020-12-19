@@ -5,7 +5,7 @@ import WeatherPanel from "../../components/WeatherPanel";
 
 interface WeatherPanelsProps {
     isLoading: boolean;
-    weather: WeatherDatapoint[] | undefined;
+    weather?: WeatherDatapoint[];
     unit: TempUnit;
 }
 
@@ -19,7 +19,7 @@ const WeatherPanels = ({
             <Preloader />
         ) : (
             <ul>
-                {weather && weather.map((item: WeatherDatapoint, i: number) => (
+                {weather && weather.map((item, i) => (
                     <WeatherPanel key={i} unit={unit} {...item} />
                 ))}
             </ul>
