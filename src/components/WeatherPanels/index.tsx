@@ -1,8 +1,7 @@
 import React, {ReactElement} from "react";
 
-
-import WeatherPanel from "components/WeatherPanel";
-import {Preloader, ThreeDots} from "react-preloader-icon";
+import Preloader from "../../components/Preloader";
+import WeatherPanel from "../../components/WeatherPanel";
 
 interface WeatherPanelsProps {
     weather: WeatherDatapoint[] | undefined;
@@ -18,15 +17,7 @@ const WeatherPanels = ({
             <ul>
                 {weather.map((item: WeatherDatapoint, i: number) => <WeatherPanel key={i} unit={unit} {...item} />)}
             </ul>
-        ) : (
-            <Preloader
-                use={ThreeDots}
-                size={42}
-                strokeWidth={8}
-                strokeColor="#F0AD4E"
-                duration={800}
-            />
-        )}
+        ) : (<Preloader />)}
     </div>
 );
 
