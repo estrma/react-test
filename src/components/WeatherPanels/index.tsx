@@ -4,20 +4,26 @@ import Preloader from "../../components/Preloader";
 import WeatherPanel from "../../components/WeatherPanel";
 
 interface WeatherPanelsProps {
+    isLoading: boolean;
     weather: WeatherDatapoint[] | undefined;
     unit: TempUnit;
 }
 
 const WeatherPanels = ({
+                           isLoading,
                            weather,
                            unit,
                        }: WeatherPanelsProps): ReactElement => (
     <div className="weather-panels">
-        {weather ? (
+        {isLoading ? (
+            <Preloader />
+        ) : (
             <ul>
-                {weather.map((item: WeatherDatapoint, i: number) => <WeatherPanel key={i} unit={unit} {...item} />)}
+                {weather && weather.map((item: WeatherDatapoint, i: number) => (
+                    <WeatherPanel key={i} unit={unit} {...item} />
+                ))}
             </ul>
-        ) : (<Preloader />)}
+        )}
     </div>
 );
 
