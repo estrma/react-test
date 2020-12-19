@@ -6,11 +6,11 @@ module.exports = {
   transform: {
     "^.+\\.(ts|js)x?$": "ts-jest"
   },
-  "moduleDirectories": [
+  moduleDirectories: [
     "node_modules",
     "src"
   ],
-  "moduleNameMapper": {
+  moduleNameMapper: {
     "^src/(.*)": "<rootDir>\\src\\$1"
   }
 };

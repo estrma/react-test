@@ -7,7 +7,7 @@ interface LocationInputProps {
 
 const LocationInput = ({value, onChange}: LocationInputProps): ReactElement => (
     <label className="location-input">
-        Search location: <input value={value} onChange={onChange} />
+        Search location: <input value={value} onChange={onChange} aria-label="search-input" />
     </label>
 );
 
