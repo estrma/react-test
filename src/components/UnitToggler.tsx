@@ -9,7 +9,7 @@ interface UnitTogglerProps {
 const UnitToggler = ({units, unitSelected, onSelect}: UnitTogglerProps): ReactElement => (
     <div className="unit-toggler">
         {
-            units.map((unit: TempUnit) => (
+            units.map(unit => (
                 <label key={unit}>
                     <input
                         type="radio"

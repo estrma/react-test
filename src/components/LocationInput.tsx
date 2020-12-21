@@ -1,8 +1,8 @@
-import React, {ReactElement} from "react";
+import React, {ChangeEvent, ReactElement} from "react";
 
 interface LocationInputProps {
     value: string;
-    onChange: (e) => void;
+    onChange: (e: ChangeEvent) => void;
 }
 
 const LocationInput = ({value, onChange}: LocationInputProps): ReactElement => (
