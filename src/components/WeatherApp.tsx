@@ -13,10 +13,10 @@ const LS_LOCATION_KEY = 'weather_app_location_id';
 const CHAR_LIMIT = 2;
 
 const WeatherApp = (): ReactElement => {
-    const geolocation = useGeolocation();
+    const geolocation = useGeolocation(false);
 
     const [unit, setUnit] = useState<TempUnit>('C');
-    const [location, setLocation] = useState<WeatherLocation | undefined | null>(undefined);
+    const [location, setLocation] = useState<WeatherLocation | undefined>(undefined);
     const [weather, setWeather] = useState<WeatherDatapoint[] | undefined>(undefined);
     const [locationString, setLocationString] = useState<string>('');
     const [locationSuggestions, setLocationSuggestions] = useState<WeatherLocation[] | undefined>(undefined);
@@ -31,7 +31,6 @@ const WeatherApp = (): ReactElement => {
     const setWeatherData = (response: WeatherDatapoint[]): void => setWeather(response);
 
     const onLocationStringChange = ({target}): void => setLocationString(target.value);
-
     const onLocationSelect = (locationSuggestion: WeatherLocation): void => setLocation(locationSuggestion);
     const onUnitSelect = (unitSelected: TempUnit): void => setUnit(unitSelected);
 
@@ -40,9 +39,7 @@ const WeatherApp = (): ReactElement => {
         if (error) {
             setHasError(true);
         }
-        if (latitude === null || longitude === null) {
-            setLocation(null);
-        } else {
+        if (latitude && longitude) {
             getLocationByLatLng(latitude, longitude)
                 .then(setLocationData)
                 .catch(() => setHasError(true));

@@ -6,8 +6,7 @@ interface GeolocationProps {
     error?: GeolocationPositionError
 }
 
-const useGeolocation = (): GeolocationProps => {
-
+const useGeolocation = (watchPosition: boolean): GeolocationProps => {
     const [coordinates, setCoordinates] = useState({
         latitude: null,
         longitude: null,
@@ -21,6 +20,7 @@ const useGeolocation = (): GeolocationProps => {
                 latitude,
                 longitude,
             } = coords;
+
             if (!didCancel) {
                 setCoordinates({
                     latitude,
@@ -43,10 +43,13 @@ const useGeolocation = (): GeolocationProps => {
         let watchId;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(updateCoordinates, setError);
-            watchId = navigator.geolocation.watchPosition(
-                updateCoordinates,
-                setError
-            )
+           if (watchPosition) {
+                watchId = navigator.geolocation.watchPosition(
+                    updateCoordinates,
+                    setError,
+
+                )
+           }
         }
         return () => {
             if (watchId) {
@@ -54,7 +57,7 @@ const useGeolocation = (): GeolocationProps => {
             }
             didCancel = true
         }
-    }, []);
+    }, [watchPosition]);
 
     return coordinates;
 };
