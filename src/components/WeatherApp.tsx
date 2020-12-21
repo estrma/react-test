@@ -26,10 +26,6 @@ const WeatherApp = (): ReactElement => {
 
     const [hasError, setHasError] = useState<boolean>(false);
 
-    const setLocationData = (response: WeatherLocation[]): void => response && setLocation(response[0]);
-    const setLocationSuggestionsData = (response: WeatherLocation[]): void => setLocationSuggestions(response);
-    const setWeatherData = (response: WeatherDatapoint[]): void => setWeather(response);
-
     const onLocationStringChange = ({target}): void => setLocationString(target.value);
     const onLocationSelect = (locationSuggestion: WeatherLocation): void => setLocation(locationSuggestion);
     const onUnitSelect = (unitSelected: TempUnit): void => setUnit(unitSelected);
@@ -41,7 +37,7 @@ const WeatherApp = (): ReactElement => {
         }
         if (latitude && longitude) {
             getLocationByLatLng(latitude, longitude)
-                .then(setLocationData)
+                .then((response: WeatherLocation[]): void => response && setLocation(response[0]))
                 .catch(() => setHasError(true));
         }
     }, [geolocation]);
@@ -51,7 +47,7 @@ const WeatherApp = (): ReactElement => {
         const {woeid} = location;
         setWeatherLoading(true);
         getWeather(woeid)
-            .then(setWeatherData)
+            .then((response: WeatherDatapoint[]): void => setWeather(response))
             .catch(() => setHasError(true));
         localStorage.setItem(LS_LOCATION_KEY, `${woeid}`);
     }, [location]);
@@ -60,7 +56,7 @@ const WeatherApp = (): ReactElement => {
         if (locationString.length > CHAR_LIMIT) {
             setLocationSuggestionsLoading(true);
             getLocation(locationString)
-                .then(setLocationSuggestionsData)
+                .then((response: WeatherLocation[]): void => setLocationSuggestions(response))
                 .catch(() => setHasError(true));
         } else {
             setLocationSuggestions(undefined);
