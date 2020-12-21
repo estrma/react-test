@@ -48,7 +48,8 @@ const WeatherApp = (): ReactElement => {
         setWeatherLoading(true);
         getWeather(woeid)
             .then((response: WeatherDatapoint[]): void => setWeather(response))
-            .catch(() => setHasError(true));
+            .catch(() => setHasError(true))
+            .finally(() => setWeatherLoading(false));
         localStorage.setItem(LS_LOCATION_KEY, `${woeid}`);
     }, [location]);
 
@@ -57,23 +58,12 @@ const WeatherApp = (): ReactElement => {
             setLocationSuggestionsLoading(true);
             getLocation(locationString)
                 .then((response: WeatherLocation[]): void => setLocationSuggestions(response))
-                .catch(() => setHasError(true));
+                .catch(() => setHasError(true))
+                .finally(() => setLocationSuggestionsLoading(false));
         } else {
             setLocationSuggestions(undefined);
         }
     }, [locationString]);
-
-    useEffect(() => {
-        if (locationSuggestions) {
-            setLocationSuggestionsLoading(false);
-        }
-    }, [locationSuggestions]);
-
-    useEffect(() => {
-        if (weather) {
-            setWeatherLoading(false);
-        }
-    }, [weather]);
 
     return (
         <>
