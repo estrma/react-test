@@ -4,12 +4,12 @@ import LocationTitle from "../components/LocationTitle";
 
 describe('LocationTitle', () => {
     it('renders the correct text if null', () => {
-        render(<LocationTitle location={null} />);
+        render(<LocationTitle isLoading={false} location={null} />);
         expect(screen.getByText('location not set')).toBeInTheDocument();
     });
 
     it('renders the correct text if location set', () => {
-        render(<LocationTitle location={{
+        render(<LocationTitle isLoading={false} location={{
             latt_long: "52.235352,21.009390",
             location_type: "City",
             title: "Warsaw",

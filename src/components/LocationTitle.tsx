@@ -3,14 +3,19 @@ import Preloader from "../components/Preloader";
 
 interface LocationTitleProps {
     location: WeatherLocation;
+    isLoading: boolean;
 }
 
-const LocationTitle = ({location}: LocationTitleProps): ReactElement => (
+const LocationTitle = ({location, isLoading}: LocationTitleProps): ReactElement => (
     <h2 className="location-title">
-        {location === null && 'location not set'}
-        {location === undefined && (<Preloader />)}
-        {location && location.title}
-        {location && <span>{location.latt_long}</span>}
+        {isLoading ? (<Preloader />) : (
+            location ? (
+                <>
+                    {location.title}
+                    <span>{location.latt_long}</span>
+                </>
+            ) : 'location not set'
+        )}
     </h2>
 );
 

@@ -21,6 +21,7 @@ const WeatherApp = (): ReactElement => {
     const [locationString, setLocationString] = useState<string>('');
     const [locationSuggestions, setLocationSuggestions] = useState<WeatherLocation[] | undefined>(undefined);
 
+    const [isLocationLoading, setLocationLoading] = useState<boolean>(false);
     const [isWeatherLoading, setWeatherLoading] = useState<boolean>(false);
     const [isLocationSuggestionsLoading, setLocationSuggestionsLoading] = useState<boolean>(false);
 
@@ -32,13 +33,16 @@ const WeatherApp = (): ReactElement => {
 
     useEffect(() => {
         const {latitude, longitude, geolocationError} = geolocation;
+        setLocationLoading(true);
         if (geolocationError) {
             setError(geolocationError);
+            setLocationLoading(false);
         }
         if (latitude && longitude) {
             getLocationByLatLng(latitude, longitude)
                 .then((response: WeatherLocation[]): void => response && setLocation(response[0]))
-                .catch((err) => setError(err));
+                .catch((err) => setError(err))
+                .finally(() => setLocationLoading(false));
         }
     }, [geolocation]);
 
@@ -69,7 +73,7 @@ const WeatherApp = (): ReactElement => {
         <>
             {error && <Error error={error} />}
             <UnitToggler units={['C', 'F']} unitSelected={unit} onSelect={onUnitSelect} />
-            <LocationTitle location={location} />
+            <LocationTitle location={location} isLoading={isLocationLoading} />
             <WeatherPanels unit={unit} weather={weather} isLoading={isWeatherLoading} />
             <LocationInput value={locationString} onChange={onLocationStringChange} />
             <LocationSuggestions isLoading={isLocationSuggestionsLoading} locations={locationSuggestions}
