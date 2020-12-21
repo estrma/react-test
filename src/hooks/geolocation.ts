@@ -3,14 +3,14 @@ import {useEffect, useState} from 'react'
 interface GeolocationProps {
     latitude: number;
     longitude: number;
-    error?: GeolocationPositionError
+    geolocationError?: GeolocationPositionError
 }
 
 const useGeolocation = (watchPosition: boolean): GeolocationProps => {
     const [coordinates, setCoordinates] = useState({
         latitude: null,
         longitude: null,
-        error: null
+        geolocationError: null
     });
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const useGeolocation = (watchPosition: boolean): GeolocationProps => {
                 setCoordinates({
                     latitude,
                     longitude,
-                    error: null
+                    geolocationError: null
                 });
             }
         };
@@ -35,7 +35,7 @@ const useGeolocation = (watchPosition: boolean): GeolocationProps => {
                 setCoordinates({
                     latitude: null,
                     longitude: null,
-                    error
+                    geolocationError: error
                 })
             }
         };

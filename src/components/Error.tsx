@@ -1,8 +1,13 @@
 import React, {ReactElement} from "react";
 
-const Error = (): ReactElement => (
+interface ErrorProps {
+    error: GeolocationPositionError | Error;
+}
+
+const Error = ({error}: ErrorProps): ReactElement => (
     <div className="error">
-        Something went wrong.
+        Error! <br />
+        <small>{error.message}</small>
     </div>
 );
 

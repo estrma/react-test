@@ -24,21 +24,21 @@ const WeatherApp = (): ReactElement => {
     const [isWeatherLoading, setWeatherLoading] = useState<boolean>(false);
     const [isLocationSuggestionsLoading, setLocationSuggestionsLoading] = useState<boolean>(false);
 
-    const [hasError, setHasError] = useState<boolean>(false);
+    const [error, setError] = useState<Error | GeolocationPositionError | null>(null);
 
     const onLocationStringChange = ({target}): void => setLocationString(target.value);
     const onLocationSelect = (locationSuggestion: WeatherLocation): void => setLocation(locationSuggestion);
     const onUnitSelect = (unitSelected: TempUnit): void => setUnit(unitSelected);
 
     useEffect(() => {
-        const {latitude, longitude, error} = geolocation;
-        if (error) {
-            setHasError(true);
+        const {latitude, longitude, geolocationError} = geolocation;
+        if (geolocationError) {
+            setError(geolocationError);
         }
         if (latitude && longitude) {
             getLocationByLatLng(latitude, longitude)
                 .then((response: WeatherLocation[]): void => response && setLocation(response[0]))
-                .catch(() => setHasError(true));
+                .catch((err) => setError(err));
         }
     }, [geolocation]);
 
@@ -48,7 +48,7 @@ const WeatherApp = (): ReactElement => {
         setWeatherLoading(true);
         getWeather(woeid)
             .then((response: WeatherDatapoint[]): void => setWeather(response))
-            .catch(() => setHasError(true))
+            .catch((err) => setError(err))
             .finally(() => setWeatherLoading(false));
         localStorage.setItem(LS_LOCATION_KEY, `${woeid}`);
     }, [location]);
@@ -58,7 +58,7 @@ const WeatherApp = (): ReactElement => {
             setLocationSuggestionsLoading(true);
             getLocation(locationString)
                 .then((response: WeatherLocation[]): void => setLocationSuggestions(response))
-                .catch(() => setHasError(true))
+                .catch((err) => setError(err))
                 .finally(() => setLocationSuggestionsLoading(false));
         } else {
             setLocationSuggestions(undefined);
@@ -67,7 +67,7 @@ const WeatherApp = (): ReactElement => {
 
     return (
         <>
-            {hasError && <Error />}
+            {error && <Error error={error} />}
             <UnitToggler units={['C', 'F']} unitSelected={unit} onSelect={onUnitSelect} />
             <LocationTitle location={location} />
             <WeatherPanels unit={unit} weather={weather} isLoading={isWeatherLoading} />
